@@ -25,8 +25,6 @@ async function run() {
 
         app.post('/task', async (req, res) => {
             const taskData = req.body
-            console.log(taskData)
-
             const result = await taskCollection.insertOne(taskData)
             return res.send({ success: true, result })
         })
@@ -35,7 +33,7 @@ async function run() {
 
         app.get('/task', async (req, res) => {
             const userEmail = req.query.userEmail
-            console.log(userEmail)
+
             const query = { email: userEmail }
             const result = await taskCollection.find(query).toArray()
             res.send(result)
