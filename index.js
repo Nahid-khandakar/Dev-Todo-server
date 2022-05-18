@@ -11,7 +11,7 @@ app.use(express.json())
 // DK8M26VX0FZHpJe5
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const query = require('express/lib/middleware/query')
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.fjsrw.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
@@ -38,6 +38,13 @@ async function run() {
             console.log(userEmail)
             const query = { email: userEmail }
             const result = await taskCollection.find(query).toArray()
+            res.send(result)
+        })
+
+        app.delete('/task/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: ObjectId(id) };
+            const result = await taskCollection.deleteOne(query);
             res.send(result)
         })
 
