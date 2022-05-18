@@ -12,6 +12,7 @@ app.use(express.json())
 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const query = require('express/lib/middleware/query')
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.fjsrw.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
@@ -29,6 +30,18 @@ async function run() {
             const result = await taskCollection.insertOne(taskData)
             return res.send({ success: true, result })
         })
+
+
+
+        app.get('/task', async (req, res) => {
+            const userEmail = req.query.userEmail
+            console.log(userEmail)
+            const query = { email: userEmail }
+            const result = await taskCollection.find(query).toArray()
+            res.send(result)
+        })
+
+
 
     } finally {
         // await client.close();
