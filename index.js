@@ -7,8 +7,7 @@ require('dotenv').config()
 app.use(cors())
 app.use(express.json())
 
-// todo - admin
-// DK8M26VX0FZHpJe5
+
 
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
@@ -56,7 +55,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('Todo server')
+    res.send('This is Todo server')
 })
 
 app.listen(port, () => {
